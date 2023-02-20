@@ -1,5 +1,5 @@
-<p-card [header]="pokemon.name | titlecase">
-  <img class="pokemon-image" src="././assets/pokemons/1.png" [alt]="pokemon.name">
+<p-card [header]="pokemon.name | titlecase" [ngClass]="{ 'is-odd': pokemon.id % 2 }" [appHighlightEven]="pokemon.id">
+  <img class="pokemon-image" [src]="pokemon.id | pokemonImg" [alt]="pokemon.name">
   <ng-template pTemplate="footer">
       <button pButton class="w-12" label="Catch" (click)="catchPokemon()"></button>
   </ng-template>
