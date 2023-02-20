@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Pokemon } from 'src/app/domain/pokemon';
 
 @Component({
   selector: 'app-pokemon',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./pokemon.component.scss']
 })
 export class PokemonComponent {
+  @Input() public pokemon: Pokemon = {} as Pokemon;
+  @Output() public catch: EventEmitter<Pokemon> = new EventEmitter<Pokemon>();
 
+  public catchPokemon(): void {
+    this.catch.emit(this.pokemon);
+  }
 }
