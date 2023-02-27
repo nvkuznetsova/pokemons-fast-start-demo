@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./pokemons.component.scss']
 })
 export class PokemonsComponent {
+  public showMyPokemons = false;
 
+  public changeView(): void {
+    this.showMyPokemons = !this.showMyPokemons;
+  }
 }

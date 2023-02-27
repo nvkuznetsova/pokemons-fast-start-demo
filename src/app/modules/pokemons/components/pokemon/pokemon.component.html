@@ -1,6 +1,10 @@
-<p-card [header]="pokemon.name | titlecase" [ngClass]="{ 'is-odd': pokemon.id % 2 }" [appHighlightEven]="pokemon.id">
+<p-card [header]="pokemon.name | titlecase" [ngClass]="{ 'is-odd': pokemon.id % 2, 'is-caught': isCaught }" [appHighlightEven]="pokemon.id">
   <img class="pokemon-image" [src]="pokemon.id | pokemonImg" [alt]="pokemon.name">
   <ng-template pTemplate="footer">
-      <button pButton class="w-12" label="Catch" (click)="catchPokemon()"></button>
+      <button *ngIf="!isCaught; else date" pButton class="w-12" label="Catch" (click)="catchPokemon()"></button>
   </ng-template>
 </p-card>
+
+<ng-template #date>
+  <span>{{ pokemon.date | date: 'medium' }}</span>
+</ng-template>

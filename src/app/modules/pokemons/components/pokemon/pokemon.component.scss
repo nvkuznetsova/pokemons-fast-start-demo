@@ -3,8 +3,16 @@
   height: 20rem;
 }
 
-::ng-deep .is-odd {
-  .p-card {
-    background-color: var(--blue-100);
+::ng-deep {
+  .is-odd {
+    .p-card {
+      background-color: var(--blue-100);
+    }
+  }
+
+  .is-caught {
+    .p-card {
+      background-color: var(--green-100);
+    }
   }
 }

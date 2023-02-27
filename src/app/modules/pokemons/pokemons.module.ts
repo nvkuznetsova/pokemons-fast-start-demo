@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { PokemonsComponent } from './pokemons.component';
 import { PokemonImgPipe } from './pipes/pokemon-img.pipe';
 import { HighlightEvenDirective } from './directives/highlight-even.directive';
+import { MyPokemonsListComponent } from './components/my-pokemons-list/my-pokemons-list.component';
 
 
 
@@ -16,7 +17,8 @@ import { HighlightEvenDirective } from './directives/highlight-even.directive';
     PokemonComponent,
     PokemonsComponent,
     PokemonImgPipe,
-    HighlightEvenDirective
+    HighlightEvenDirective,
+    MyPokemonsListComponent
   ],
   imports: [
     CommonModule,

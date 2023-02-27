@@ -1,3 +1,8 @@
 <div class="px-6 py-4">
-  <app-pokemons-list></app-pokemons-list>
+  <button pButton class="w-6 m-2" label="Change view" (click)="changeView()"></button>
+  <app-pokemons-list *ngIf="!showMyPokemons; else myPokemons"></app-pokemons-list>
 </div>
+
+<ng-template #myPokemons>
+  <app-my-pokemons-list></app-my-pokemons-list>
+</ng-template>
