@@ -1,67 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MyPokemon, Pokemon } from '../domain/pokemon';
+import { Observable } from 'rxjs';
+import { CreatePokemon, MyPokemon, Pokemon } from '../domain/pokemon';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonsService {
-  private pokemons: Pokemon[] = [{
-    name: "bulbasaur",
-    id: 1,
-  },
-  {
-    name: "ivysaur",
-    id: 2
-  },
-  {
-    name: "venusaur",
-    id: 3
-  },
-  {
-    name: "charmander",
-    id: 4
-  },
-  {
-    name: "charmeleon",
-    id: 5
-  },
-  {
-    name: "charizard",
-    id: 6
-  },
-  {
-    name: "squirtle",
-    id: 7
-  },
-  {
-    name: "wartortle",
-    id: 8
-  },
-  {
-    name: "blastoise",
-    id: 9
-  },
-  {
-    name: "caterpie",
-    id: 10
-  }];
+  private readonly pokemonsUrl = 'http://localhost:3000';
 
-  private myPokemons: MyPokemon[] = [];
+  constructor(private readonly httpClient: HttpClient) { }
 
-  constructor() { }
-
-  public getPokemons(): Pokemon[] {
-    return this.pokemons;
+  public getPokemons(): Observable<Pokemon[]> {
+    return this.httpClient.get<Pokemon[]>(`${ this.pokemonsUrl }/pokemons?_embed=my-pokemons`)
   }
 
-  public getMyPokemons(): MyPokemon[] {
-    return this.myPokemons;
+  public getMyPokemons(): Observable<MyPokemon[]> {
+    return this.httpClient.get<MyPokemon[]>(`${ this.pokemonsUrl }/my-pokemons`)
   }
 
-  public catchPokemon(pokemon: Pokemon): void {
-    this.myPokemons.push({
-      ...pokemon,
-      date: new Date(),
-    })
+  public catchPokemon(pokemon: CreatePokemon): Observable<MyPokemon> {
+    return this.httpClient.post<MyPokemon>(`${ this.pokemonsUrl }/my-pokemons`, pokemon);
   }
 }
