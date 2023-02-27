@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CoreModule } from './modules/core/core.module';
 import { PokemonsModule } from './modules/pokemons/pokemons.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PokemonsModule } from './modules/pokemons/pokemons.module';
   imports: [
     BrowserModule,
     CoreModule,
-    PokemonsModule
+    PokemonsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
