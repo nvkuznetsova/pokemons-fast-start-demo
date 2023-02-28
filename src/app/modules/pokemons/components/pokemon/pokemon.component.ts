@@ -14,6 +14,10 @@ export class PokemonComponent {
     return !!this.pokemon.date;
   }
 
+  public get pokemonId(): number {
+    return this.pokemon?.pokemonId || this.pokemon.id;
+  }
+
   public catchPokemon(): void {
     this.catch.emit(this.pokemon);
   }

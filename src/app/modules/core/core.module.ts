@@ -5,6 +5,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { SearchComponent } from './components/search/search.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -17,8 +19,10 @@ import { TabMenuModule } from 'primeng/tabmenu';
   ],
   imports: [
     CommonModule,
-    TabMenuModule
+    TabMenuModule,
+    FormsModule,
+    InputTextModule,
   ],
-  exports: [HeaderComponent]
+  exports: [HeaderComponent, SearchComponent]
 })
 export class CoreModule { }

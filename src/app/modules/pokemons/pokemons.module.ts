@@ -9,6 +9,7 @@ import { PokemonImgPipe } from './pipes/pokemon-img.pipe';
 import { HighlightEvenDirective } from './directives/highlight-even.directive';
 import { MyPokemonsListComponent } from './components/my-pokemons-list/my-pokemons-list.component';
 import { PokemonsRoutingModule } from './pokemons-routing.module';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -26,6 +27,7 @@ import { PokemonsRoutingModule } from './pokemons-routing.module';
     CardModule,
     ButtonModule,
     PokemonsRoutingModule,
+    CoreModule,
   ],
   exports: [PokemonsComponent]
 })

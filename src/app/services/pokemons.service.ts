@@ -11,8 +11,8 @@ export class PokemonsService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  public getPokemons(): Observable<Pokemon[]> {
-    return this.httpClient.get<Pokemon[]>(`${ this.pokemonsUrl }/pokemons?_embed=my-pokemons`)
+  public getPokemons(limit = 10): Observable<Pokemon[]> {
+    return this.httpClient.get<Pokemon[]>(`${ this.pokemonsUrl }/pokemons?_start=0&_limit=${limit}&_embed=my-pokemons`)
   }
 
   public getMyPokemons(): Observable<MyPokemon[]> {
@@ -21,5 +21,9 @@ export class PokemonsService {
 
   public catchPokemon(pokemon: CreatePokemon): Observable<MyPokemon> {
     return this.httpClient.post<MyPokemon>(`${ this.pokemonsUrl }/my-pokemons`, pokemon);
+  }
+
+  public searchPokemons(search: string): Observable<Pokemon[]> {
+    return this.httpClient.get<Pokemon[]>(`${ this.pokemonsUrl }/pokemons?_embed=my-pokemons&q=${search}`);
   }
 }

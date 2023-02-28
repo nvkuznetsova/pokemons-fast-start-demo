@@ -10,6 +10,7 @@ export interface MyPokemon extends Pokemon {
 export interface PokemonCard extends Pokemon {
   date?: Date;
   'my-pokemons'?: MyPokemon[];
+  pokemonId?: number;
 }
 
 export interface CreatePokemon {

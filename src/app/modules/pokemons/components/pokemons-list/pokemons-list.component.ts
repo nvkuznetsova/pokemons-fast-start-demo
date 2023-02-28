@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, merge, Observable, of, Subject, switchMap, take, tap } from 'rxjs';
 import { CreatePokemon, Pokemon } from 'src/app/domain/pokemon';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
@@ -10,9 +10,11 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonsListComponent implements OnInit {
-  private refresh$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
-  public pokemons$: Observable<Pokemon[]> = this.refresh$.pipe(
-    switchMap(() => this.pokemonsService.getPokemons())
+  private refresh$: BehaviorSubject<number> = new BehaviorSubject<number>(10);
+  private search$: Subject<Pokemon[]> = new Subject<Pokemon[]>();
+  public pokemons$: Observable<Pokemon[]> = merge(
+    this.refresh$.pipe(switchMap((limit) => this.pokemonsService.getPokemons(limit))),
+    this.search$
   );
 
   constructor(private readonly pokemonsService: PokemonsService) {}
@@ -21,11 +23,12 @@ export class PokemonsListComponent implements OnInit {
     // this.pokemons = this.pokemonsService.getPokemons();
   }
 
-  public loadMore(): void {
+  public loadMore(currentLength: number): void {
     console.log('load more');
+    this.refresh$.next(currentLength + 10)
   }
 
-  public catchPokemon(pokemon: Pokemon): void {
+  public catchPokemon(pokemon: Pokemon, currentLength: number): void {
     const newPokemon: CreatePokemon = {
       name: pokemon.name,
       date: new Date(),
@@ -33,8 +36,19 @@ export class PokemonsListComponent implements OnInit {
     };
     this.pokemonsService.catchPokemon(newPokemon).pipe(
       take(1),
-      tap(() => this.refresh$.next())
+      tap(() => this.refresh$.next(currentLength))
     ).subscribe();
     console.log(this.pokemonsService.getMyPokemons());
+  }
+
+  public onSearch(text: string): void {
+    of(text).pipe(
+      debounceTime(250),
+      filter((value) => !!value && value.length >= 3),
+      distinctUntilChanged(),
+      switchMap((value) => this.pokemonsService.searchPokemons(value.toLowerCase()).pipe(
+        tap((pokemons) => this.search$.next(pokemons))
+      ))
+    ).subscribe();
   }
 }
