@@ -9,6 +9,7 @@ import { MenuItem } from 'primeng/api';
 export class HeaderComponent {
   public menuItems: MenuItem[] = [
     { label: 'Pokemons', routerLink: '/all-pokemons' },
-    { label: 'My Pokemons', routerLink: '/my-collection' }
+    { label: 'My Pokemons', routerLink: '/my-collection' },
+    { label: 'Users', routerLink: '/users' }
   ];
 }

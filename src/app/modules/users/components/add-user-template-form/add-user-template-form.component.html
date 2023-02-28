@@ -1,0 +1,19 @@
+<form #myForm="ngForm" class="p-fluid flex flex-column gap-3 w-4 py-3" (ngSubmit)="onSubmit(myForm)">
+  <div class="field">
+    <input type="text" pInputText ngModel name="username" placeholder="Username" required maxlength="30">
+  </div>
+  <div class="field">
+    <input type="email" pInputText ngModel name="email" placeholder="Email" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+  </div>
+  <div class="field">
+    <input type="password" pInputText ngModel name="password" placeholder="Password" required maxlength="20">
+  </div>
+  <div class="field flex align-items-center gap-2">
+    <p-inputSwitch [(ngModel)]="shouldUseCountry" name="shouldUseCountry" inputId="shouldUseCountry"></p-inputSwitch>
+    <label for="shouldUseCountry">Should select country</label>
+  </div>
+  <div *ngIf="shouldUseCountry" class="field">
+    <p-dropdown [options]="countries" ngModel name="country" optionLabel="name" optionValue="code" placeholder="Select country" [required]="true"></p-dropdown>
+  </div>
+  <button pButton type="submit" label="Submit" [disabled]="myForm.invalid"></button>
+</form>
