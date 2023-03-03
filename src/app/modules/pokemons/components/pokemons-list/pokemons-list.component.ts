@@ -1,7 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, merge, Observable, of, Subject, switchMap, take, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { debounceTime, distinctUntilChanged, filter, Observable, of, tap } from 'rxjs';
 import { CreatePokemon, Pokemon } from 'src/app/domain/pokemon';
-import { PokemonsService } from 'src/app/services/pokemons.service';
+import { State } from 'src/app/store';
+import { catchPokemon, getPokemons, searchPokemons } from 'src/app/store/pokemons/actions/pokemons-actions.actions';
+import { selectPokemons } from 'src/app/store/pokemons/selectors/pokemons-selectors.selectors';
 
 @Component({
   selector: 'app-pokemons-list',
@@ -10,22 +13,16 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonsListComponent implements OnInit {
-  private refresh$: BehaviorSubject<number> = new BehaviorSubject<number>(10);
-  private search$: Subject<Pokemon[]> = new Subject<Pokemon[]>();
-  public pokemons$: Observable<Pokemon[]> = merge(
-    this.refresh$.pipe(switchMap((limit) => this.pokemonsService.getPokemons(limit))),
-    this.search$
-  );
+  public pokemons$: Observable<Pokemon[]> = this.store.select(selectPokemons);
 
-  constructor(private readonly pokemonsService: PokemonsService) {}
+  constructor(private readonly store: Store<State>) {}
 
   public ngOnInit(): void {
-    // this.pokemons = this.pokemonsService.getPokemons();
+    this.store.dispatch(getPokemons({}))
   }
 
-  public loadMore(currentLength: number): void {
-    console.log('load more');
-    this.refresh$.next(currentLength + 10)
+  public loadMore(): void {
+    this.store.dispatch(getPokemons({}))
   }
 
   public catchPokemon(pokemon: Pokemon, currentLength: number): void {
@@ -34,11 +31,7 @@ export class PokemonsListComponent implements OnInit {
       date: new Date(),
       pokemonId: pokemon.id
     };
-    this.pokemonsService.catchPokemon(newPokemon).pipe(
-      take(1),
-      tap(() => this.refresh$.next(currentLength))
-    ).subscribe();
-    console.log(this.pokemonsService.getMyPokemons());
+    this.store.dispatch(catchPokemon({ pokemon: newPokemon }));
   }
 
   public onSearch(text: string): void {
@@ -46,9 +39,7 @@ export class PokemonsListComponent implements OnInit {
       debounceTime(250),
       filter((value) => !!value && value.length >= 3),
       distinctUntilChanged(),
-      switchMap((value) => this.pokemonsService.searchPokemons(value.toLowerCase()).pipe(
-        tap((pokemons) => this.search$.next(pokemons))
-      ))
+      tap((value) => this.store.dispatch(searchPokemons({ name: value.toLowerCase() })))
     ).subscribe();
   }
 }

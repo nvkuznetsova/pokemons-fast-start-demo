@@ -3,5 +3,5 @@
   <div class="flex justify-content-between align-items-center flex-wrap gap-4">
     <app-pokemon *ngFor="let pokemon of pokemons" [pokemon]="pokemon" (catch)="catchPokemon($event, pokemons.length)"></app-pokemon>
   </div>
-  <button pButton class="w-12 p-button-secondary p-button-lg" [label]="'load more' | uppercase" (click)="loadMore(pokemons.length)"></button>
+  <button pButton class="w-12 p-button-secondary p-button-lg" [label]="'load more' | uppercase" (click)="loadMore()"></button>
 </div>
