@@ -1,10 +1,30 @@
-<p-card [header]="pokemon.name | titlecase" [ngClass]="{ 'is-odd': pokemon.id % 2, 'is-caught': isCaught }" [appHighlightEven]="pokemon.id">
+<p-card [header]="pokemon.name | titlecase" [ngClass]="{ 'is-odd': pokemon.id % 2, 'is-caught': isCaught }"
+  [appHighlightEven]="pokemon.id">
   <img class="pokemon-image" [src]="pokemonId | pokemonImg" [alt]="pokemon.name">
   <ng-template pTemplate="footer">
-      <button *ngIf="!isCaught && !this.pokemon['my-pokemons']?.length; else date" pButton class="w-12" label="Catch" (click)="catchPokemon()"></button>
+    <button *ngIf="!isCaught && !this.pokemon['my-pokemons']?.length; else myPokemon" pButton class="w-12" label="Catch"
+      (click)="catchPokemon()"></button>
   </ng-template>
 </p-card>
 
-<ng-template #date>
-  <span>{{ pokemon.date | date: 'medium' }}</span>
+<ng-template #myPokemon>
+  <div *ngIf="isCaught && !this.pokemon['my-pokemons']" class="flex flex-column gap-2">
+    <span><b>{{ pokemon.myPokemonName | titlecase }}</b></span>
+    <span>{{ pokemon.date | date: 'medium' }}</span>
+    <button *ngIf="!isEdit" pButton [label]="pokemon.myPokemonName ? 'Change Name' : 'Give Name'" (click)="enableEdit()"></button>
+    <div *ngIf="isEdit"
+      class="p-fluid flex align-items-center gap-2">
+      <input pInputText placeholder="Name" type="text" class="p-inputtext-sm" [(ngModel)]="pokemonName" />
+      <button
+        pButton
+        class="p-button-sm p-button-icon-only p-button-rounded p-button-text"
+        type="button"
+        pTooltip="Save"
+        tooltipPosition="top"
+        icon="pi pi-check"
+        (click)="namePokemon()"
+      >
+      </button>
+    </div>
+  </div>
 </ng-template>

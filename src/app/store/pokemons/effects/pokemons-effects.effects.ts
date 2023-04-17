@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
+import { catchError, delay, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 import { State } from '../..';
 import * as fromPokemonsActions from '../actions/pokemons-actions.actions';
@@ -13,6 +13,7 @@ export class PokemonsEffectsEffects {
   public pokemonsEffect$ = createEffect(() => this.actions$.pipe(
     ofType(fromPokemonsActions.getPokemons),
     withLatestFrom(this.store.select(selectPokemonsCount)),
+    delay(1000),
     switchMap(([{ limit }, count]) => this.pokemonsService.getPokemons(limit || count + 10).pipe(
       map((data) => fromPokemonsActions.getPokemonsSuccess({ data })),
       catchError((error) => of(fromPokemonsActions.getPokemonsFailure({ error })))

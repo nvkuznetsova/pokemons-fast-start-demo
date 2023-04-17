@@ -7,6 +7,7 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import * as fromPokemons from './pokemons/reducers/pokemons-reducer.reducer';
+import * as fromMyPokemons from './my-pokemons/reducers/my-pokemons.reducer';
 import * as fromRouter from '@ngrx/router-store';
 
 export const selectRouter = createFeatureSelector<fromRouter.RouterReducerState<any>>('router');
@@ -24,11 +25,13 @@ export const {
 
 export interface State {
   [fromPokemons.pokemonsReducerFeatureKey]: fromPokemons.State;
+  [fromMyPokemons.myPokemonsFeatureKey]: fromMyPokemons.State,
   router: fromRouter.RouterReducerState<any>;
 }
 
 export const reducers: ActionReducerMap<State> = {
   [fromPokemons.pokemonsReducerFeatureKey]: fromPokemons.reducer,
+  [fromMyPokemons.myPokemonsFeatureKey]: fromMyPokemons.reducer,
   router: fromRouter.routerReducer
 };
 

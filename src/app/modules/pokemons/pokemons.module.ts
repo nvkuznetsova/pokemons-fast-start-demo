@@ -10,8 +10,9 @@ import { HighlightEvenDirective } from './directives/highlight-even.directive';
 import { MyPokemonsListComponent } from './components/my-pokemons-list/my-pokemons-list.component';
 import { PokemonsRoutingModule } from './pokemons-routing.module';
 import { CoreModule } from '../core/core.module';
-
-
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,9 @@ import { CoreModule } from '../core/core.module';
     ButtonModule,
     PokemonsRoutingModule,
     CoreModule,
+    FormsModule,
+    TooltipModule,
+    InputTextModule,
   ],
   exports: [PokemonsComponent]
 })

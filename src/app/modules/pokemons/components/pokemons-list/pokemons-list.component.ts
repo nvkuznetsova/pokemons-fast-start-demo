@@ -17,9 +17,7 @@ export class PokemonsListComponent implements OnInit {
 
   constructor(private readonly store: Store<State>) {}
 
-  public ngOnInit(): void {
-    this.store.dispatch(getPokemons({}))
-  }
+  public ngOnInit(): void {}
 
   public loadMore(): void {
     this.store.dispatch(getPokemons({}))

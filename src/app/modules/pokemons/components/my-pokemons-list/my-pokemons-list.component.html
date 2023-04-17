@@ -1,6 +1,6 @@
 <div *ngIf="{ myPokemons: (myPokemons$ | async) || [] } as data" class="flex flex-column gap-4">
   <div class="flex justify-content-between align-items-center flex-wrap gap-4">
-    <app-pokemon *ngFor="let pokemon of data.myPokemons" [pokemon]="pokemon"></app-pokemon>
+    <app-pokemon *ngFor="let pokemon of data.myPokemons" [pokemon]="pokemon" (giveName)="namePokemon($event)"></app-pokemon>
   </div>
 
   <button pButton class="w-12 p-button-secondary p-button-lg" [label]="'Load more' | uppercase" (click)="loadMore()" [disabled]="!data.myPokemons.length"></button>

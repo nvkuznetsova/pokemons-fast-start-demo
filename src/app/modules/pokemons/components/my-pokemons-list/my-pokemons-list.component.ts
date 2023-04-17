@@ -14,11 +14,11 @@ export class MyPokemonsListComponent implements OnInit {
 
   constructor(private readonly pokemonsService: PokemonsService) {}
 
-  public ngOnInit(): void {
-    // this.myPokemons = this.pokemonsService.getMyPokemons();
-  }
+  public ngOnInit(): void {}
 
   public loadMore(): void {
     console.log('load more');
   }
+
+  public namePokemon(myPokemon: MyPokemon): void {}
 }

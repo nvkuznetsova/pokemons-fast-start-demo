@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { PokemonsEffectsEffects } from './store/pokemons/effects/pokemons-effects.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { MyPokemonsEffects } from './store/my-pokemons/effects/my-pokemons.effects';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25 }) : [],
-    EffectsModule.forRoot([PokemonsEffectsEffects]),
+    EffectsModule.forRoot([PokemonsEffectsEffects, MyPokemonsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
